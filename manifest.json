@@ -1,34 +1,28 @@
-//NEED TO ADD MORE TO MANIFEST.JSON
-//https://chatgpt.com/c/66ee7315-0184-800a-b764-f385150a0d11
+// manifest.json
 {
   "manifest_version": 3,
-  "name": "PRYDE",
-  "description": "Extension that detects whether a user is phishing or not",
+  "name": "Email Phishing Detector",
   "version": "1.0",
-  "icons": {
-    "16": "icons/icon-16.png",
-    "32": "icons/icon-32.png",
-    "48": "icons/icon-48.png"
-  },
-  "action": {
-    "default_popup": "popup.html"
-  },
+  "description": "Detect potential phishing attempts in emails",
+  "permissions": ["activeTab", "storage"],
   "host_permissions": [
-    "https://mail.google.com/*",
-    "https://mail.yahoo.com/*",
-    "https://outlook.office.com/*",
-    "https://mail.icloud.com/*",
-    "https://www.icloud.com/mail/*",
-    "https://mail.protonmail.com/*"
+    "http://localhost:5000/*"
   ],
-  "permissions": [
-    "storage",
-    "activeTab",
-    "contextMenus",
-    "dns",
-    "downloads",
-    "loginState",
-    "pageCapture",
-    "webRequest"
-  ]
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.gmail.com/*", "*://*.outlook.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
 }
